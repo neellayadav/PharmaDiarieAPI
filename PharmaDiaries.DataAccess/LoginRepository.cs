@@ -26,12 +26,13 @@ namespace PharmaDiaries.DataAccess
         }
 
 
-        public UserModel SignUp(UserModel uModel)
+        public UserModel SignUp(SignUpModel uModel)
         {
             //var result = false;
 
             var result = new UserModel();
-            DataSet ds = SqlHelper.ExecuteDataset(PharmaDiaries_ConnectionString, "[mcDCR].[usp_UserSignUp]", uModel.CompID!, uModel.UserID!, uModel.Password!, uModel.Name ?? "", uModel.Mobile!, uModel.HeadQuater!, 0, true);
+            //DataSet ds = SqlHelper.ExecuteDataset(PharmaDiaries_ConnectionString, "[mcDCR].[usp_UserSignUp]", uModel.CompID!, uModel.UserID!, uModel.Password!, uModel.Name ?? "", uModel.Mobile!, uModel.HeadQuater!, 0, true);
+            DataSet ds = SqlHelper.ExecuteDataset(PharmaDiaries_ConnectionString, "[mcDCR].[usp_UserSignUp]", uModel.UserID!, uModel.Password!, uModel.Mobile!);
             result = DataTableHelper.ConvertDataTable<UserModel>(ds.Tables[0]).First();
             return result;
 

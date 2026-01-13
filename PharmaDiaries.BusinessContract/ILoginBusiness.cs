@@ -8,7 +8,7 @@ namespace PharmaDiaries.BusinessContract
 	{
 		public UserModel Validate(LoginUserModel lumodel);
 
-        public UserModel SignUp(UserModel uModel);
+        public UserModel SignUp(SignUpModel uModel);
 
     }
 }

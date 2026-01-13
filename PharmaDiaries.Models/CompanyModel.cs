@@ -18,6 +18,8 @@ namespace PharmaDiaries.Models
         public string? LogoURL { get; set; }
         public bool IsActive { get; set; } = true;
         public bool IsLocationTrackerEnabled { get; set; } = false;
+        public int GeoFenceRadiusMeters { get; set; } = 100;
+        public int GPSAccuracyThreshold { get; set; } = 50;
         public int? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? ModifiedBy { get; set; }
@@ -58,7 +60,26 @@ namespace PharmaDiaries.Models
         public string? LogoURL { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsLocationTrackerEnabled { get; set; }
+        public int? GeoFenceRadiusMeters { get; set; }
+        public int? GPSAccuracyThreshold { get; set; }
         public int ModifiedBy { get; set; }
+    }
+
+    public class GeoFenceSettingsRequest
+    {
+        public int CompID { get; set; }
+        public bool IsLocationTrackerEnabled { get; set; }
+        public int GeoFenceRadiusMeters { get; set; } = 100;
+        public int GPSAccuracyThreshold { get; set; } = 50;
+        public int ModifiedBy { get; set; }
+    }
+
+    public class GeoFenceSettingsResponse
+    {
+        public int CompID { get; set; }
+        public bool IsLocationTrackerEnabled { get; set; }
+        public int GeoFenceRadiusMeters { get; set; }
+        public int GPSAccuracyThreshold { get; set; }
     }
 
     public class CompanyStatusUpdateRequest

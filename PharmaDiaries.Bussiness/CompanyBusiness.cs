@@ -74,5 +74,15 @@ namespace PharmaDiaries.Bussiness
         {
             return _irepository.GetLocationTrackerSettingAsync(compId);
         }
+
+        public Task<GeoFenceSettingsResponse?> GetGeoFenceSettingsAsync(int compId)
+        {
+            return _irepository.GetGeoFenceSettingsAsync(compId);
+        }
+
+        public Task<bool> UpdateGeoFenceSettingsAsync(GeoFenceSettingsRequest request)
+        {
+            return _irepository.UpdateGeoFenceSettingsAsync(request);
+        }
     }
 }

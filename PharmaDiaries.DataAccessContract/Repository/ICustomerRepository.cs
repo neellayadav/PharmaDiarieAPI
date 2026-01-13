@@ -13,6 +13,10 @@ namespace PharmaDiaries.DataAccessContract.Repository
         public bool Update(CustomerModel custModel);
 
         public bool Delete(DeleteCustomerModel delCustMod);
+
+        public CustomerLocationResponse? GetCustomerLocation(int compId, int custId);
+
+        public bool UpdateCustomerLocation(CustomerLocationUpdateRequest request);
     }
 }
 

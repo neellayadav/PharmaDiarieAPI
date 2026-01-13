@@ -12,6 +12,7 @@ namespace PharmaDiaries.BusinessContract
         public string GetEmpYearlyReport(EmpYearlyReportRequest request);
         public string GetFWYearlyReport(YearlyReportRequest request);
         public string GetFinancialYearReport(FinancialYearReportRequest request);
+        public List<FWCustomerCallSummaryModel> GetCustomerCallSummary(FWCustomerCallSummaryRequestModel request);
     }
 }
 

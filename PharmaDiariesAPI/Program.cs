@@ -8,11 +8,18 @@ using PharmaDiaries.DataAccessContract;
 using PharmaDiaries.DataAccessContract.Repository;
 using Microsoft.OpenApi.Models;
 using PharmaDiariesAPI.Services;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+// Configure JSON to use camelCase for all API responses (standard REST convention)
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    });
 
 // Swagger/OpenAPI setup
 builder.Services.AddEndpointsApiExplorer();
@@ -59,6 +66,9 @@ builder.Services.AddSingleton<ICompanyBusiness, CompanyBusiness>();
 
 builder.Services.AddSingleton<IScreenRepository, ScreenRepository>();
 builder.Services.AddSingleton<IScreenBusiness, ScreenBusiness>();
+
+builder.Services.AddSingleton<IRoleHierarchyRepository, RoleHierarchyRepository>();
+builder.Services.AddSingleton<IRoleHierarchyBusiness, RoleHierarchyBusiness>();
 
 // R2 Storage Service for image uploads
 builder.Services.AddSingleton<IR2StorageService, R2StorageService>();

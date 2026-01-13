@@ -42,6 +42,10 @@ namespace PharmaDiaries.Models
 
             public bool? IsActive { get; set; }
 
+            public decimal? Latitude { get; set; }
+
+            public decimal? Longitude { get; set; }
+
             public int? CreatedBy { get; set; }
 
             public DateTime? CreatedOn { get; set; }
@@ -50,6 +54,23 @@ namespace PharmaDiaries.Models
 
             public DateTime? ModifiedOn { get; set; }
 
+    }
+
+    public class CustomerLocationUpdateRequest
+    {
+        public int CompID { get; set; }
+        public int CustID { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public int ModifiedBy { get; set; }
+    }
+
+    public class CustomerLocationResponse
+    {
+        public int CustID { get; set; }
+        public string? Name { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
     }
 
     public class DeleteCustomerModel

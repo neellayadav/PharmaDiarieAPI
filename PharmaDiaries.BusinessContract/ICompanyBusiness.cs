@@ -29,6 +29,10 @@ namespace PharmaDiaries.BusinessContract
         public Task<bool> UpdateLocationTrackerSettingAsync(int compId, bool isEnabled, int modifiedBy);
 
         public Task<bool> GetLocationTrackerSettingAsync(int compId);
+
+        public Task<GeoFenceSettingsResponse?> GetGeoFenceSettingsAsync(int compId);
+
+        public Task<bool> UpdateGeoFenceSettingsAsync(GeoFenceSettingsRequest request);
 	}
 }
 

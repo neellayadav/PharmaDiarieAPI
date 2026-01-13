@@ -225,6 +225,21 @@ namespace PharmaDiaries.DataAccess
                 throw ex;
             }
         }
+
+        List<FWCustomerCallSummaryModel> IReportRepository.GetCustomerCallSummary(FWCustomerCallSummaryRequestModel request)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(_PharmaDiaries_ConnectionString, "[mcDCR].[usp_FWCustomersCallSummary]",
+                    request.CompId, request.CustID, request.UID, request.DateFrom, request.DateTo);
+                var data = DataTableHelper.ConvertDataTable<FWCustomerCallSummaryModel>(ds.Tables[0]);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

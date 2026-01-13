@@ -39,6 +39,14 @@ namespace PharmaDiaries.Models
 
         public bool? IsCompAdmin { get; set; }
 
+        public int? RoleID { get; set; }
+
+        public string? RoleName { get; set; }
+
+        public int? ReportingManagerID { get; set; }
+
+        public string? ReportingManagerName { get; set; }
+
         public int? CreatedBy { get; set; }
 
         public DateTime? CreatedOn { get; set; }
@@ -46,6 +54,15 @@ namespace PharmaDiaries.Models
         public int? ModifiedBy { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
+    }
+
+    public class SignUpModel
+    {
+        public string? UserID { get; set; }
+
+        public string? Password { get; set; }
+
+        public string? Mobile { get; set; }
     }
 
     public class LoginUserModel
@@ -114,6 +131,15 @@ namespace PharmaDiaries.Models
         public UserModel? User { get; set; }
 
         public List<int>? ScreenIDs { get; set; }
+    }
+
+    public class DeleteUserByUserIDRequest
+    {
+        public int CompID { get; set; }
+
+        public string UserID { get; set; } = string.Empty;
+
+        public string Password { get; set; } = string.Empty;
     }
 }
 

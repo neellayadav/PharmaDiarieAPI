@@ -20,7 +20,7 @@ namespace PharmaDiaries.Bussiness
             return _repository.Validate(lumodel);
         }
 
-        UserModel ILoginBusiness.SignUp(UserModel uModel)
+        UserModel ILoginBusiness.SignUp(SignUpModel uModel)
         {
             return _repository.SignUp(uModel);
         }

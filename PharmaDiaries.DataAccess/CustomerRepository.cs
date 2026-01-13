@@ -95,6 +95,8 @@ namespace PharmaDiaries.DataAccess
 	                    cmd.Parameters.AddWithValue("@Country", custModel.Country);
 	                    cmd.Parameters.AddWithValue("@Mobile", custModel.Mobile);
 	                    cmd.Parameters.AddWithValue("@Telephone", custModel.Telephone);
+	                    cmd.Parameters.AddWithValue("@Latitude", (object?)custModel.Latitude ?? DBNull.Value);
+	                    cmd.Parameters.AddWithValue("@Longitude", (object?)custModel.Longitude ?? DBNull.Value);
 	                    cmd.Parameters.AddWithValue("@CreatedBy", custModel.CreatedBy);
 
 
@@ -144,6 +146,8 @@ namespace PharmaDiaries.DataAccess
                         cmd.Parameters.AddWithValue("@Country", custModel.Country);
                         cmd.Parameters.AddWithValue("@Mobile", custModel.Mobile);
                         cmd.Parameters.AddWithValue("@Telephone", custModel.Telephone);
+                        cmd.Parameters.AddWithValue("@Latitude", (object?)custModel.Latitude ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Longitude", (object?)custModel.Longitude ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@ModifiedBy", custModel.ModifiedBy);
 
 
@@ -158,6 +162,76 @@ namespace PharmaDiaries.DataAccess
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public CustomerLocationResponse? GetCustomerLocation(int compId, int custId)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_PharmaDiaries_ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("[mcMaster].[usp_GetCustomerLocation]"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@CompID", compId);
+                        cmd.Parameters.AddWithValue("@CustID", custId);
+
+                        con.Open();
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return new CustomerLocationResponse
+                                {
+                                    CustID = reader.GetInt32(reader.GetOrdinal("CustID")),
+                                    Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString(reader.GetOrdinal("Name")),
+                                    Latitude = reader.IsDBNull(reader.GetOrdinal("Latitude")) ? null : reader.GetDecimal(reader.GetOrdinal("Latitude")),
+                                    Longitude = reader.IsDBNull(reader.GetOrdinal("Longitude")) ? null : reader.GetDecimal(reader.GetOrdinal("Longitude"))
+                                };
+                            }
+                        }
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return null;
+        }
+
+        public bool UpdateCustomerLocation(CustomerLocationUpdateRequest request)
+        {
+            var result = false;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_PharmaDiaries_ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("[mcMaster].[usp_UpdateCustomerLocation]"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@CompID", request.CompID);
+                        cmd.Parameters.AddWithValue("@CustID", request.CustID);
+                        cmd.Parameters.AddWithValue("@Latitude", request.Latitude);
+                        cmd.Parameters.AddWithValue("@Longitude", request.Longitude);
+                        cmd.Parameters.AddWithValue("@ModifiedBy", request.ModifiedBy);
+
+                        con.Open();
+                        result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
 

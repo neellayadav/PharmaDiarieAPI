@@ -132,6 +132,23 @@ namespace PharmaDiariesAPI.Controllers.worktype
         }
 
         /// <summary>
+        /// Get Field Work Customer Call Summary
+        /// </summary>
+        /// <param name="request">Customer call summary request parameters</param>
+        /// <returns>List of customer call summary records</returns>
+        [HttpPost("FWCustomerCallSummary")]
+        public Task<IActionResult> FWCustomerCallSummary(FWCustomerCallSummaryRequestModel request)
+        {
+            var data = this._IResultData.GetCustomerCallSummary(request);
+
+            return Task.FromResult<IActionResult>(Ok(new
+            {
+                message = "Customer call summary retrieved successfully",
+                data = data
+            }));
+        }
+
+        /// <summary>
         /// Download a generated report file
         /// </summary>
         /// <param name="fileName">The name of the file to download (e.g., "2000NOVEMBER2024.xlsx")</param>

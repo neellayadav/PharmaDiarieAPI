@@ -75,5 +75,48 @@ namespace PharmaDiariesAPI.Controllers.worktype
             return Ok(result);
         }
 
+        [HttpGet("GetPotentialManagers")]
+        public IActionResult GetPotentialManagers(int compid, int? currentuid, int? currentroleid)
+        {
+            var result = _IResultData.GetPotentialManagers(compid, currentuid, currentroleid);
+            return Ok(result);
+        }
+
+        [HttpPost("DeleteUserByUserID")]
+        public IActionResult DeleteUserByUserID(DeleteUserByUserIDRequest request)
+        {
+            try
+            {
+                var result = _IResultData.DeleteUserByUserID(request);
+                if (result)
+                {
+                    return Ok(new ApiResponse<bool>
+                    {
+                        Success = true,
+                        Message = "User deleted successfully",
+                        Data = true
+                    });
+                }
+                else
+                {
+                    return BadRequest(new ApiResponse<bool>
+                    {
+                        Success = false,
+                        Message = "Invalid credentials (Company code / Userid / Password is incorrect)",
+                        Data = false
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error deleting user: {ex.Message}",
+                    Data = false
+                });
+            }
+        }
+
     }
 }

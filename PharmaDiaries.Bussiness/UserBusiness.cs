@@ -51,6 +51,16 @@ namespace PharmaDiaries.Bussiness
             return _repository.ResetPassword(lUModel);
         }
 
+        List<UserModel> IUserBusiness.GetPotentialManagers(int compID, int? currentUID, int? currentRoleID)
+        {
+            return _repository.GetPotentialManagers(compID, currentUID, currentRoleID);
+        }
+
+        bool IUserBusiness.DeleteUserByUserID(DeleteUserByUserIDRequest request)
+        {
+            return _repository.DeleteUserByUserID(request);
+        }
+
     }
 
 }

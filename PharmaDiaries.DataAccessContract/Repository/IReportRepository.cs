@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PharmaDiaries.Models;
 
 namespace PharmaDiaries.DataAccessContract.Repository
@@ -11,6 +12,7 @@ namespace PharmaDiaries.DataAccessContract.Repository
 		public string GetEmpYearlyReport(EmpYearlyReportRequest request);
 		public string GetFWYearlyReport(YearlyReportRequest request);
 		public string GetFinancialYearReport(FinancialYearReportRequest request);
+		public List<FWCustomerCallSummaryModel> GetCustomerCallSummary(FWCustomerCallSummaryRequestModel request);
 	}
 }
 

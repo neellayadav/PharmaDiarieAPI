@@ -53,5 +53,37 @@ namespace PharmaDiariesAPI.Controllers.worktype
             return Ok(result);
         }
 
+        [HttpGet("GetLocation")]
+        public IActionResult GetCustomerLocation([FromQuery] int compId, [FromQuery] int custId)
+        {
+            try
+            {
+                var result = this.IResultData.GetCustomerLocation(compId, custId);
+                if (result == null)
+                {
+                    return NotFound(new { success = false, message = "Customer not found" });
+                }
+                return Ok(new { success = true, data = result });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost("UpdateLocation")]
+        public IActionResult UpdateCustomerLocation([FromBody] CustomerLocationUpdateRequest request)
+        {
+            try
+            {
+                var result = this.IResultData.UpdateCustomerLocation(request);
+                return Ok(new { success = result, message = result ? "Location updated successfully" : "Failed to update location" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
     }
 }

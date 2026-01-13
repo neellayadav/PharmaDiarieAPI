@@ -68,6 +68,8 @@ namespace PharmaDiaries.DataAccess
                         cmd.Parameters.AddWithValue("@telephone", uModel.Telephone);
                         cmd.Parameters.AddWithValue("@ProfileImageURL", (object?)uModel.ProfileImageURL ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@isCompAdmin", uModel.IsCompAdmin ?? false);
+                        cmd.Parameters.AddWithValue("@roleID", (object?)uModel.RoleID ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@reportingManagerID", (object?)uModel.ReportingManagerID ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@createdBy", uModel.CreatedBy);
 
                         con.Open();
@@ -176,6 +178,8 @@ namespace PharmaDiaries.DataAccess
                         cmd.Parameters.AddWithValue("@telephone", uModel.Telephone);
                         cmd.Parameters.AddWithValue("@ProfileImageURL", (object?)uModel.ProfileImageURL ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@isCompAdmin", uModel.IsCompAdmin ?? false);
+                        cmd.Parameters.AddWithValue("@roleID", (object?)uModel.RoleID ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@reportingManagerID", (object?)uModel.ReportingManagerID ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@modifiedBy", uModel.ModifiedBy);
 
                         con.Open();
@@ -194,6 +198,14 @@ namespace PharmaDiaries.DataAccess
                 throw ex;
             }
 
+        }
+
+        public List<UserModel> GetPotentialManagers(int compID, int? currentUID, int? currentRoleID = null)
+        {
+            var result = new List<UserModel>();
+            DataSet ds = SqlHelper.ExecuteDataset(_PharmaDiaries_ConnectionString, "[mcDCR].[usp_GetPotentialManagers]", compID, currentUID ?? (object)DBNull.Value, currentRoleID ?? (object)DBNull.Value);
+            result = DataTableHelper.ConvertDataTable<UserModel>(ds.Tables[0]);
+            return result;
         }
 
         public bool Delete(UserModel uModel)
@@ -260,6 +272,36 @@ namespace PharmaDiaries.DataAccess
             catch (Exception ex)
             {
                 //transaction.Commit();
+                throw ex;
+            }
+        }
+
+        public bool DeleteUserByUserID(DeleteUserByUserIDRequest request)
+        {
+            var result = false;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_PharmaDiaries_ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("[mcDCR].[usp_UserDeleteByUserID_Pwd]"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+
+                        cmd.Parameters.AddWithValue("@compid", request.CompID);
+                        cmd.Parameters.AddWithValue("@UserID", request.UserID);
+                        cmd.Parameters.AddWithValue("@pwd", request.Password);
+
+                        con.Open();
+
+                        result = Convert.ToBoolean(cmd.ExecuteNonQuery());
+
+                        return result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

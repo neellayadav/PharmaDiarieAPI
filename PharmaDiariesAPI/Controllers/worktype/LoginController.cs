@@ -34,7 +34,7 @@ namespace PharmaDiariesAPI.Controllers.worktype
         }
 
         [HttpPost("SignUp")]
-        public IActionResult SignUp(UserModel uModel)
+        public IActionResult SignUp(SignUpModel uModel)
         {
             var result = this.IResultData.SignUp(uModel);
             return Ok(result);

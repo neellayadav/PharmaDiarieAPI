@@ -200,7 +200,9 @@ namespace PharmaDiaries.DataAccess
                 command.Parameters.AddWithValue("@Telephone", (object?)request.Telephone ?? DBNull.Value);
                 command.Parameters.AddWithValue("@Fax", (object?)request.Fax ?? DBNull.Value);
                 command.Parameters.AddWithValue("@LogoURL", (object?)request.LogoURL ?? DBNull.Value);
-                //command.Parameters.AddWithValue("@IsActive", (object?)request.IsActive ?? DBNull.Value);
+                command.Parameters.AddWithValue("@IsLocationTrackerEnabled", (object?)request.IsLocationTrackerEnabled ?? DBNull.Value);
+                command.Parameters.AddWithValue("@GeoFenceRadiusMeters", (object?)request.GeoFenceRadiusMeters ?? DBNull.Value);
+                command.Parameters.AddWithValue("@GPSAccuracyThreshold", (object?)request.GPSAccuracyThreshold ?? DBNull.Value);
                 command.Parameters.AddWithValue("@ModifiedBy", request.ModifiedBy);
 
                 con.Open();
@@ -321,6 +323,8 @@ namespace PharmaDiaries.DataAccess
                 LogoURL = reader.IsDBNull("LogoURL") ? null : reader.GetString("LogoURL"),
                 IsActive = reader.GetBoolean("IsActive"),
                 IsLocationTrackerEnabled = reader.IsDBNull("IsLocationTrackerEnabled") ? false : reader.GetBoolean("IsLocationTrackerEnabled"),
+                GeoFenceRadiusMeters = reader.IsDBNull("GeoFenceRadiusMeters") ? 100 : reader.GetInt32("GeoFenceRadiusMeters"),
+                GPSAccuracyThreshold = reader.IsDBNull("GPSAccuracyThreshold") ? 50 : reader.GetInt32("GPSAccuracyThreshold"),
                 CreatedBy = reader.IsDBNull("CreatedBy") ? null : reader.GetInt32("CreatedBy"),
                 CreatedOn = reader.IsDBNull("CreatedOn") ? null : reader.GetDateTime("CreatedOn"),
                 ModifiedBy = reader.IsDBNull("ModifiedBy") ? null : reader.GetInt32("ModifiedBy"),
@@ -359,6 +363,56 @@ namespace PharmaDiaries.DataAccess
                 var result = await command.ExecuteScalarAsync();
                 con.Close();
                 return result != null && result != DBNull.Value && (bool)result;
+            }
+        }
+
+        public async Task<GeoFenceSettingsResponse?> GetGeoFenceSettingsAsync(int compId)
+        {
+            using (SqlConnection con = new SqlConnection(_PharmaDiaries_ConnectionString))
+            {
+                using var command = new SqlCommand("[mcMaster].[usp_GetCompanyGeoFenceSettings]", con)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@CompID", compId);
+
+                con.Open();
+                using var reader = await command.ExecuteReaderAsync();
+                if (await reader.ReadAsync())
+                {
+                    return new GeoFenceSettingsResponse
+                    {
+                        CompID = reader.GetInt32("CompID"),
+                        IsLocationTrackerEnabled = reader.GetBoolean("IsLocationTrackerEnabled"),
+                        GeoFenceRadiusMeters = reader.GetInt32("GeoFenceRadiusMeters"),
+                        GPSAccuracyThreshold = reader.GetInt32("GPSAccuracyThreshold")
+                    };
+                }
+                con.Close();
+                return null;
+            }
+        }
+
+        public async Task<bool> UpdateGeoFenceSettingsAsync(GeoFenceSettingsRequest request)
+        {
+            using (SqlConnection con = new SqlConnection(_PharmaDiaries_ConnectionString))
+            {
+                using var command = new SqlCommand("[mcMaster].[usp_UpdateCompanyGeoFenceSettings]", con)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@CompID", request.CompID);
+                command.Parameters.AddWithValue("@IsLocationTrackerEnabled", request.IsLocationTrackerEnabled);
+                command.Parameters.AddWithValue("@GeoFenceRadiusMeters", request.GeoFenceRadiusMeters);
+                command.Parameters.AddWithValue("@GPSAccuracyThreshold", request.GPSAccuracyThreshold);
+                command.Parameters.AddWithValue("@ModifiedBy", request.ModifiedBy);
+
+                con.Open();
+                var rowsAffected = await command.ExecuteNonQueryAsync();
+                con.Close();
+                return rowsAffected > 0;
             }
         }
     }

@@ -20,6 +20,10 @@ namespace PharmaDiaries.BusinessContract
 
         public bool ResetPassword(ResetPasswordModel lUModel);
 
+        public List<UserModel> GetPotentialManagers(int compID, int? currentUID, int? currentRoleID = null);
+
+        public bool DeleteUserByUserID(DeleteUserByUserIDRequest request);
+
     }
 }
 

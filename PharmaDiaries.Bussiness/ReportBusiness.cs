@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PharmaDiaries.BusinessContract;
 using PharmaDiaries.DataAccessContract.Repository;
 using PharmaDiaries.Models;
@@ -42,6 +43,11 @@ namespace PharmaDiaries.Bussiness
         string IReportBusiness.GetFinancialYearReport(FinancialYearReportRequest request)
         {
             return _reportRepository.GetFinancialYearReport(request);
+        }
+
+        List<FWCustomerCallSummaryModel> IReportBusiness.GetCustomerCallSummary(FWCustomerCallSummaryRequestModel request)
+        {
+            return _reportRepository.GetCustomerCallSummary(request);
         }
     }
 }

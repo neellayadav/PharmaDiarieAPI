@@ -375,5 +375,69 @@ namespace PharmaDiariesAPI.Controllers.worktype
                 });
             }
         }
+
+        [HttpGet("GetGeoFenceSettings")]
+        public async Task<ActionResult<ApiResponse<GeoFenceSettingsResponse>>> GetGeoFenceSettings([FromQuery] int compId)
+        {
+            try
+            {
+                var settings = await this.IResultData.GetGeoFenceSettingsAsync(compId);
+                if (settings == null)
+                {
+                    return NotFound(new ApiResponse<GeoFenceSettingsResponse>
+                    {
+                        Success = false,
+                        Message = "Company not found"
+                    });
+                }
+
+                return Ok(new ApiResponse<GeoFenceSettingsResponse>
+                {
+                    Success = true,
+                    Message = "Geo-fence settings retrieved successfully",
+                    Data = settings
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<GeoFenceSettingsResponse>
+                {
+                    Success = false,
+                    Message = $"Error retrieving geo-fence settings: {ex.Message}"
+                });
+            }
+        }
+
+        [HttpPost("UpdateGeoFenceSettings")]
+        public async Task<ActionResult<ApiResponse<bool>>> UpdateGeoFenceSettings([FromBody] GeoFenceSettingsRequest request)
+        {
+            try
+            {
+                var updated = await this.IResultData.UpdateGeoFenceSettingsAsync(request);
+                if (!updated)
+                {
+                    return NotFound(new ApiResponse<bool>
+                    {
+                        Success = false,
+                        Message = "Company not found or update failed"
+                    });
+                }
+
+                return Ok(new ApiResponse<bool>
+                {
+                    Success = true,
+                    Message = "Geo-fence settings updated successfully",
+                    Data = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error updating geo-fence settings: {ex.Message}"
+                });
+            }
+        }
     }
 }

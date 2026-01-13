@@ -32,6 +32,16 @@ namespace PharmaDiaries.Bussiness
         {
             return _irepository.Update(custModel);
         }
+
+        public CustomerLocationResponse? GetCustomerLocation(int compId, int custId)
+        {
+            return _irepository.GetCustomerLocation(compId, custId);
+        }
+
+        public bool UpdateCustomerLocation(CustomerLocationUpdateRequest request)
+        {
+            return _irepository.UpdateCustomerLocation(request);
+        }
     }
 }
 
