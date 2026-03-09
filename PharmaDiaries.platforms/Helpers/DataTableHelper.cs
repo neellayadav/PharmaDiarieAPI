@@ -27,7 +27,7 @@ namespace Logicon.Kaidu.Platform.Helpers
             {
                 foreach (PropertyInfo pro in temp.GetProperties())
                 {
-                    if (pro.Name == column.ColumnName)
+                    if (string.Equals(pro.Name, column.ColumnName, StringComparison.OrdinalIgnoreCase))
                     {
                         if (dr[column.ColumnName] != DBNull.Value)
                         {
