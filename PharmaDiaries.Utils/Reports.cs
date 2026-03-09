@@ -35,51 +35,9 @@ namespace PharmaDiaries.Utils
                 {
                     var sheet = workbook.Worksheets.Add("Monthly Report");
 
-                    // Add headers
-                    sheet.Cell(1, 1).Value = "Company Code";
-                    sheet.Cell(1, 2).Value = "Transaction ID";
-                    sheet.Cell(1, 3).Value = "UserName";
-                    sheet.Cell(1, 4).Value = "Created On";
-                    sheet.Cell(1, 5).Value = "Head Quater";
-                    sheet.Cell(1, 6).Value = "Patch Name";
-                    sheet.Cell(1, 7).Value = "Visited";
-                    sheet.Cell(1, 8).Value = "Customer Name";
-                    sheet.Cell(1, 9).Value = "Emp. Seq. No.";
-                    sheet.Cell(1, 10).Value = "Colleague Name";
-                    sheet.Cell(1, 11).Value = "Prod. Seq. No.";
-                    sheet.Cell(1, 12).Value = "ProductDesc";
-                    sheet.Cell(1, 13).Value = "Remarks";
-
-                    // Style header row
-                    var headerRow = sheet.Range(1, 1, 1, 13);
-                    headerRow.Style.Font.Bold = true;
-                    headerRow.Style.Fill.BackgroundColor = XLColor.LightGray;
-
-                    // Add data rows
-                    for (int i = 0; i < data.Count; i++)
-                    {
-                        int j = 1;
-                        sheet.Cell(i + 2, j++).Value = data[i].CompID;
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].TransID;
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].UserName;
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].CreatedOn.ToString("dd-MM-yyyy hh:mm");
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].HQcode;
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].PatchName;
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].Visited;
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].CustName;
-                        if (i > 0 && data[i].TransID == data[i - 1].TransID && data[i].EmpSeqNo == data[i - 1].EmpSeqNo)
-                        {
-                            sheet.Cell(i + 2, j++).Value = "";
-                        }
-                        else
-                        {
-                            sheet.Cell(i + 2, j++).Value = data[i].EmpSeqNo;
-                        }
-                        sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID && data[i].EmpSeqNo == data[i - 1].EmpSeqNo) ? "" : data[i].ColleagueName;
-                        sheet.Cell(i + 2, j++).Value = data[i].ProdSeqNo;
-                        sheet.Cell(i + 2, j++).Value = data[i].ProductDesc;
-                        sheet.Cell(i + 2, j++).Value = data[i].Remarks;
-                    }
+                    // Add headers and data using shared helpers
+                    AddReportHeaders(sheet);
+                    PopulateReportData(sheet, data);
 
                     // Auto-fit columns
                     sheet.Columns().AdjustToContents();
@@ -262,10 +220,11 @@ namespace PharmaDiaries.Utils
             sheet.Cell(1, 10).Value = "Colleague Name";
             sheet.Cell(1, 11).Value = "Prod. Seq. No.";
             sheet.Cell(1, 12).Value = "ProductDesc";
-            sheet.Cell(1, 13).Value = "Remarks";
+            sheet.Cell(1, 13).Value = "POB Amount";
+            sheet.Cell(1, 14).Value = "Remarks";
 
             // Style header row
-            var headerRow = sheet.Range(1, 1, 1, 13);
+            var headerRow = sheet.Range(1, 1, 1, 14);
             headerRow.Style.Font.Bold = true;
             headerRow.Style.Fill.BackgroundColor = XLColor.LightGray;
         }
@@ -295,6 +254,7 @@ namespace PharmaDiaries.Utils
                 sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID && data[i].EmpSeqNo == data[i - 1].EmpSeqNo) ? "" : data[i].ColleagueName;
                 sheet.Cell(i + 2, j++).Value = data[i].ProdSeqNo;
                 sheet.Cell(i + 2, j++).Value = data[i].ProductDesc;
+                sheet.Cell(i + 2, j++).Value = (i > 0 && data[i].TransID == data[i - 1].TransID) ? "" : data[i].POBAmount;
                 sheet.Cell(i + 2, j++).Value = data[i].Remarks;
             }
         }

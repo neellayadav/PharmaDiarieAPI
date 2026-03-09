@@ -16,10 +16,12 @@ namespace PharmaDiaries.Models
         public string? Telephone { get; set; }
         public string? Fax { get; set; }
         public string? LogoURL { get; set; }
+        public string emailid { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public bool IsLocationTrackerEnabled { get; set; } = false;
         public int GeoFenceRadiusMeters { get; set; } = 100;
         public int GPSAccuracyThreshold { get; set; } = 50;
+        public bool ShowOnDuty { get; set; } = false;
         public int? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? ModifiedBy { get; set; }
@@ -39,6 +41,7 @@ namespace PharmaDiaries.Models
         public string? Mobile { get; set; }
         public string? Telephone { get; set; }
         public string? Fax { get; set; }
+        public string emailid { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         public int CreatedBy { get; set; }
     }
@@ -58,10 +61,12 @@ namespace PharmaDiaries.Models
         public string? Telephone { get; set; }
         public string? Fax { get; set; }
         public string? LogoURL { get; set; }
+        public string emailid { get; set; } = string.Empty;
         public bool? IsActive { get; set; }
-        public bool? IsLocationTrackerEnabled { get; set; }
-        public int? GeoFenceRadiusMeters { get; set; }
-        public int? GPSAccuracyThreshold { get; set; }
+        //public bool? IsLocationTrackerEnabled { get; set; } // These fields are updated in the CompanySettingsUpdate method.
+        //public int? GeoFenceRadiusMeters { get; set; }
+        //public int? GPSAccuracyThreshold { get; set; }
+        //public bool? ShowOnDuty { get; set; }
         public int ModifiedBy { get; set; }
     }
 
@@ -80,6 +85,16 @@ namespace PharmaDiaries.Models
         public bool IsLocationTrackerEnabled { get; set; }
         public int GeoFenceRadiusMeters { get; set; }
         public int GPSAccuracyThreshold { get; set; }
+    }
+
+    public class CompanySettingsUpdateRequest
+    {
+        public int CompID { get; set; }
+        public bool IsLocationTrackerEnabled { get; set; }
+        public int? GeoFenceRadiusMeters { get; set; }
+        public int? GPSAccuracyThreshold { get; set; }
+        public bool ShowOnduty { get; set; }
+        public int ModifiedBy { get; set; }
     }
 
     public class CompanyStatusUpdateRequest

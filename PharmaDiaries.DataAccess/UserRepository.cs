@@ -70,6 +70,7 @@ namespace PharmaDiaries.DataAccess
                         cmd.Parameters.AddWithValue("@isCompAdmin", uModel.IsCompAdmin ?? false);
                         cmd.Parameters.AddWithValue("@roleID", (object?)uModel.RoleID ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@reportingManagerID", (object?)uModel.ReportingManagerID ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@emailid", uModel.emailid ?? string.Empty);
                         cmd.Parameters.AddWithValue("@createdBy", uModel.CreatedBy);
 
                         con.Open();
@@ -180,6 +181,7 @@ namespace PharmaDiaries.DataAccess
                         cmd.Parameters.AddWithValue("@isCompAdmin", uModel.IsCompAdmin ?? false);
                         cmd.Parameters.AddWithValue("@roleID", (object?)uModel.RoleID ?? DBNull.Value);
                         cmd.Parameters.AddWithValue("@reportingManagerID", (object?)uModel.ReportingManagerID ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@emailid", uModel.emailid ?? string.Empty);
                         cmd.Parameters.AddWithValue("@modifiedBy", uModel.ModifiedBy);
 
                         con.Open();

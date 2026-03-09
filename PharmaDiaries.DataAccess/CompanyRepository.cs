@@ -61,6 +61,7 @@ namespace PharmaDiaries.DataAccess
                 command.Parameters.AddWithValue("@Mobile", (object?)request.Mobile ?? DBNull.Value);
                 command.Parameters.AddWithValue("@Telephone", (object?)request.Telephone ?? DBNull.Value);
                 command.Parameters.AddWithValue("@Fax", (object?)request.Fax ?? DBNull.Value);
+                command.Parameters.AddWithValue("@emailid", request.emailid ?? string.Empty);
                 //command.Parameters.AddWithValue("@IsActive", request.IsActive);
                 command.Parameters.AddWithValue("@CreatedBy", request.CreatedBy);
 
@@ -200,9 +201,7 @@ namespace PharmaDiaries.DataAccess
                 command.Parameters.AddWithValue("@Telephone", (object?)request.Telephone ?? DBNull.Value);
                 command.Parameters.AddWithValue("@Fax", (object?)request.Fax ?? DBNull.Value);
                 command.Parameters.AddWithValue("@LogoURL", (object?)request.LogoURL ?? DBNull.Value);
-                command.Parameters.AddWithValue("@IsLocationTrackerEnabled", (object?)request.IsLocationTrackerEnabled ?? DBNull.Value);
-                command.Parameters.AddWithValue("@GeoFenceRadiusMeters", (object?)request.GeoFenceRadiusMeters ?? DBNull.Value);
-                command.Parameters.AddWithValue("@GPSAccuracyThreshold", (object?)request.GPSAccuracyThreshold ?? DBNull.Value);
+                command.Parameters.AddWithValue("@emailid", request.emailid ?? string.Empty);
                 command.Parameters.AddWithValue("@ModifiedBy", request.ModifiedBy);
 
                 con.Open();
@@ -325,6 +324,8 @@ namespace PharmaDiaries.DataAccess
                 IsLocationTrackerEnabled = reader.IsDBNull("IsLocationTrackerEnabled") ? false : reader.GetBoolean("IsLocationTrackerEnabled"),
                 GeoFenceRadiusMeters = reader.IsDBNull("GeoFenceRadiusMeters") ? 100 : reader.GetInt32("GeoFenceRadiusMeters"),
                 GPSAccuracyThreshold = reader.IsDBNull("GPSAccuracyThreshold") ? 50 : reader.GetInt32("GPSAccuracyThreshold"),
+                ShowOnDuty = reader.IsDBNull("ShowOnDuty") ? false : reader.GetBoolean("ShowOnDuty"),
+                emailid = reader.IsDBNull("emailid") ? string.Empty : reader.GetString("emailid"),
                 CreatedBy = reader.IsDBNull("CreatedBy") ? null : reader.GetInt32("CreatedBy"),
                 CreatedOn = reader.IsDBNull("CreatedOn") ? null : reader.GetDateTime("CreatedOn"),
                 ModifiedBy = reader.IsDBNull("ModifiedBy") ? null : reader.GetInt32("ModifiedBy"),
@@ -413,6 +414,29 @@ namespace PharmaDiaries.DataAccess
                 var rowsAffected = await command.ExecuteNonQueryAsync();
                 con.Close();
                 return rowsAffected > 0;
+            }
+        }
+
+        public async Task<bool> UpdateCompanySettingsAsync(CompanySettingsUpdateRequest request)
+        {
+            using (SqlConnection con = new SqlConnection(_PharmaDiaries_ConnectionString))
+            {
+                using var command = new SqlCommand("[mcDCR].[usp_CompanySettingsUpdate]", con)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@CompID", request.CompID);
+                command.Parameters.AddWithValue("@IsLocationTrackerEnabled", request.IsLocationTrackerEnabled);
+                command.Parameters.AddWithValue("@GeoFenceRadiusMeters", (object?)request.GeoFenceRadiusMeters ?? DBNull.Value);
+                command.Parameters.AddWithValue("@GPSAccuracyThreshold", (object?)request.GPSAccuracyThreshold ?? DBNull.Value);
+                command.Parameters.AddWithValue("@ShowOnduty", request.ShowOnduty);
+                command.Parameters.AddWithValue("@ModifiedBy", request.ModifiedBy);
+
+                con.Open();
+                await command.ExecuteNonQueryAsync();
+                con.Close();
+                return true;
             }
         }
     }

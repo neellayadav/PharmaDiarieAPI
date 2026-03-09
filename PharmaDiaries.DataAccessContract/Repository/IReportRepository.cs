@@ -13,6 +13,11 @@ namespace PharmaDiaries.DataAccessContract.Repository
 		public string GetFWYearlyReport(YearlyReportRequest request);
 		public string GetFinancialYearReport(FinancialYearReportRequest request);
 		public List<FWCustomerCallSummaryModel> GetCustomerCallSummary(FWCustomerCallSummaryRequestModel request);
+		public PaginatedReportResponse GetEmpMonthlyData(EmpMonthlyDataRequest request);
+		public PaginatedReportResponse GetMonthlyData(MonthlyDataRequest request);
+		public PaginatedReportResponse GetEmpYearlyData(EmpYearlyDataRequest request);
+		public PaginatedReportResponse GetYearlyData(YearlyDataRequest request);
+		public PaginatedReportResponse GetFinancialYearData(FinancialYearDataRequest request);
 	}
 }
 

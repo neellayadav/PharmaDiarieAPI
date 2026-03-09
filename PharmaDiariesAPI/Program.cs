@@ -79,6 +79,24 @@ builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
 // DCR Date Request Repository (Past date DCR approval)
 builder.Services.AddSingleton<IDCRDateRequestRepository, DCRDateRequestRepository>();
 
+// Login Log Repository and Business
+builder.Services.AddSingleton<ILoginLogRepository, LoginLogRepository>();
+builder.Services.AddSingleton<ILoginLogBusiness, LoginLogBusiness>();
+
+// Expense (DA/TA) Module
+builder.Services.AddSingleton<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddSingleton<IExpenseBusiness, ExpenseBusiness>();
+builder.Services.AddSingleton<IExpensePolicyRepository, ExpensePolicyRepository>();
+builder.Services.AddSingleton<IExpensePolicyBusiness, ExpensePolicyBusiness>();
+
+// App Version Check (Force Update)
+builder.Services.AddSingleton<IAppRepository, AppRepository>();
+builder.Services.AddSingleton<IAppBusiness, AppBusiness>();
+
+// Sales Module (Primary/Secondary Sales)
+builder.Services.AddSingleton<ISalesRepository, SalesRepository>();
+builder.Services.AddSingleton<ISalesBusiness, SalesBusiness>();
+
 // Enable CORS
 builder.Services.AddCors(c =>
 {

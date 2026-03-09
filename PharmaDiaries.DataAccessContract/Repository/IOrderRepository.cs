@@ -1,10 +1,15 @@
-using PharmaDiaries.Models;
+// ============================================================================
+// DEPRECATED: This interface is no longer in use.
+// Replaced by IOrdersRepository defined in OrdersRepository.cs
+// ============================================================================
 
-namespace PharmaDiaries.DataAccessContract.Repository
-{
-    public interface IOrderRepository
-    {
-        bool Save(OrderModel order);
-        List<OrderModel> GetByTransID(string transId);
-    }
-}
+//using PharmaDiaries.Models;
+
+//namespace PharmaDiaries.DataAccessContract.Repository
+//{
+//    public interface IOrderRepository
+//    {
+//        bool Save(OrderModel order);
+//        List<OrderModel> GetByTransID(string transId);
+//    }
+//}

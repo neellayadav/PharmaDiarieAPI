@@ -197,6 +197,8 @@ namespace PharmaDiaries.Models
 
         public decimal? TotalAmount { get; set; }
 
+        public string orderType { get; set; } = "POB";
+
         public bool? IsActive { get; set; }
 
         public int? CreatedBy { get; set; }

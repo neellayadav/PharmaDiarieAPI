@@ -149,6 +149,91 @@ namespace PharmaDiariesAPI.Controllers.worktype
         }
 
         /// <summary>
+        /// Get Employee Monthly Report Data (Paginated JSON)
+        /// </summary>
+        /// <param name="request">Employee monthly data request parameters</param>
+        /// <returns>Paginated report data</returns>
+        [HttpPost("FWEmpMonthlyData")]
+        public Task<IActionResult> FWEmpMonthlyData(EmpMonthlyDataRequest request)
+        {
+            var result = this._IResultData.GetEmpMonthlyData(request);
+
+            return Task.FromResult<IActionResult>(Ok(new
+            {
+                message = "Report data retrieved successfully",
+                data = result
+            }));
+        }
+
+        /// <summary>
+        /// Get Company Monthly Report Data (Paginated JSON)
+        /// </summary>
+        /// <param name="request">Monthly data request parameters</param>
+        /// <returns>Paginated report data</returns>
+        [HttpPost("FWMonthlyData")]
+        public Task<IActionResult> FWMonthlyData(MonthlyDataRequest request)
+        {
+            var result = this._IResultData.GetMonthlyData(request);
+
+            return Task.FromResult<IActionResult>(Ok(new
+            {
+                message = "Report data retrieved successfully",
+                data = result
+            }));
+        }
+
+        /// <summary>
+        /// Get Employee Yearly Report Data (Paginated JSON)
+        /// </summary>
+        /// <param name="request">Employee yearly data request parameters</param>
+        /// <returns>Paginated report data</returns>
+        [HttpPost("FWEmpYearlyData")]
+        public Task<IActionResult> FWEmpYearlyData(EmpYearlyDataRequest request)
+        {
+            var result = this._IResultData.GetEmpYearlyData(request);
+
+            return Task.FromResult<IActionResult>(Ok(new
+            {
+                message = "Report data retrieved successfully",
+                data = result
+            }));
+        }
+
+        /// <summary>
+        /// Get Company Yearly Report Data (Paginated JSON)
+        /// </summary>
+        /// <param name="request">Yearly data request parameters</param>
+        /// <returns>Paginated report data</returns>
+        [HttpPost("FWYearlyData")]
+        public Task<IActionResult> FWYearlyData(YearlyDataRequest request)
+        {
+            var result = this._IResultData.GetYearlyData(request);
+
+            return Task.FromResult<IActionResult>(Ok(new
+            {
+                message = "Report data retrieved successfully",
+                data = result
+            }));
+        }
+
+        /// <summary>
+        /// Get Financial Year Report Data (Paginated JSON)
+        /// </summary>
+        /// <param name="request">Financial year data request parameters</param>
+        /// <returns>Paginated report data</returns>
+        [HttpPost("FinancialYearlyData")]
+        public Task<IActionResult> FinancialYearlyData(FinancialYearDataRequest request)
+        {
+            var result = this._IResultData.GetFinancialYearData(request);
+
+            return Task.FromResult<IActionResult>(Ok(new
+            {
+                message = "Report data retrieved successfully",
+                data = result
+            }));
+        }
+
+        /// <summary>
         /// Download a generated report file
         /// </summary>
         /// <param name="fileName">The name of the file to download (e.g., "2000NOVEMBER2024.xlsx")</param>

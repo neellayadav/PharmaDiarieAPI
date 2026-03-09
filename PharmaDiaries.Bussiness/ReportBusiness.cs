@@ -49,6 +49,31 @@ namespace PharmaDiaries.Bussiness
         {
             return _reportRepository.GetCustomerCallSummary(request);
         }
+
+        PaginatedReportResponse IReportBusiness.GetEmpMonthlyData(EmpMonthlyDataRequest request)
+        {
+            return _reportRepository.GetEmpMonthlyData(request);
+        }
+
+        PaginatedReportResponse IReportBusiness.GetMonthlyData(MonthlyDataRequest request)
+        {
+            return _reportRepository.GetMonthlyData(request);
+        }
+
+        PaginatedReportResponse IReportBusiness.GetEmpYearlyData(EmpYearlyDataRequest request)
+        {
+            return _reportRepository.GetEmpYearlyData(request);
+        }
+
+        PaginatedReportResponse IReportBusiness.GetYearlyData(YearlyDataRequest request)
+        {
+            return _reportRepository.GetYearlyData(request);
+        }
+
+        PaginatedReportResponse IReportBusiness.GetFinancialYearData(FinancialYearDataRequest request)
+        {
+            return _reportRepository.GetFinancialYearData(request);
+        }
     }
 }
 

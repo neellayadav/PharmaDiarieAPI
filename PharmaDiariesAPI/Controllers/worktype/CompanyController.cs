@@ -439,5 +439,37 @@ namespace PharmaDiariesAPI.Controllers.worktype
                 });
             }
         }
+
+        [HttpPost("UpdateCompanySettings")]
+        public async Task<ActionResult<ApiResponse<bool>>> UpdateCompanySettings([FromBody] CompanySettingsUpdateRequest request)
+        {
+            try
+            {
+                var updated = await this.IResultData.UpdateCompanySettingsAsync(request);
+                if (!updated)
+                {
+                    return NotFound(new ApiResponse<bool>
+                    {
+                        Success = false,
+                        Message = "Company not found or settings update failed"
+                    });
+                }
+
+                return Ok(new ApiResponse<bool>
+                {
+                    Success = true,
+                    Message = "Company settings updated successfully",
+                    Data = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error updating company settings: {ex.Message}"
+                });
+            }
+        }
     }
 }

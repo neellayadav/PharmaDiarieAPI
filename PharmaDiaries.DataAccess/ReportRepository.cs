@@ -240,6 +240,126 @@ namespace PharmaDiaries.DataAccess
                 throw ex;
             }
         }
+
+        PaginatedReportResponse IReportRepository.GetEmpMonthlyData(EmpMonthlyDataRequest request)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(_PharmaDiaries_ConnectionString, "[mcDCR].[usp_FWHDEmpMonthlyDataList]",
+                    request.CompID, request.UID, request.Month, request.Year, request.Page, request.PageSize);
+
+                int totalCount = Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"]);
+                var data = DataTableHelper.ConvertDataTable<ReportDataItem>(ds.Tables[1]);
+
+                return new PaginatedReportResponse
+                {
+                    TotalCount = totalCount,
+                    Page = request.Page,
+                    PageSize = request.PageSize,
+                    Data = data
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        PaginatedReportResponse IReportRepository.GetMonthlyData(MonthlyDataRequest request)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(_PharmaDiaries_ConnectionString, "[mcDCR].[usp_FWHDMonthlyDataList]",
+                    request.CompID, request.Month, request.Year, request.Page, request.PageSize);
+
+                int totalCount = Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"]);
+                var data = DataTableHelper.ConvertDataTable<ReportDataItem>(ds.Tables[1]);
+
+                return new PaginatedReportResponse
+                {
+                    TotalCount = totalCount,
+                    Page = request.Page,
+                    PageSize = request.PageSize,
+                    Data = data
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        PaginatedReportResponse IReportRepository.GetEmpYearlyData(EmpYearlyDataRequest request)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(_PharmaDiaries_ConnectionString, "[mcDCR].[usp_FWHDEmpYearlyDataList]",
+                    request.CompID, request.UID, request.Year, request.Page, request.PageSize);
+
+                int totalCount = Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"]);
+                var data = DataTableHelper.ConvertDataTable<ReportDataItem>(ds.Tables[1]);
+
+                return new PaginatedReportResponse
+                {
+                    TotalCount = totalCount,
+                    Page = request.Page,
+                    PageSize = request.PageSize,
+                    Data = data
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        PaginatedReportResponse IReportRepository.GetYearlyData(YearlyDataRequest request)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(_PharmaDiaries_ConnectionString, "[mcDCR].[usp_FWHDYearlyDataList]",
+                    request.CompID, request.Year, request.Page, request.PageSize);
+
+                int totalCount = Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"]);
+                var data = DataTableHelper.ConvertDataTable<ReportDataItem>(ds.Tables[1]);
+
+                return new PaginatedReportResponse
+                {
+                    TotalCount = totalCount,
+                    Page = request.Page,
+                    PageSize = request.PageSize,
+                    Data = data
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        PaginatedReportResponse IReportRepository.GetFinancialYearData(FinancialYearDataRequest request)
+        {
+            try
+            {
+                DataSet ds = SqlHelper.ExecuteDataset(_PharmaDiaries_ConnectionString, "[mcDCR].[usp_FWHDFinancialYearDataList]",
+                    request.CompID, request.FromMonth, request.FromYear, request.ToMonth, request.ToYear, request.Page, request.PageSize);
+
+                int totalCount = Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"]);
+                var data = DataTableHelper.ConvertDataTable<ReportDataItem>(ds.Tables[1]);
+
+                return new PaginatedReportResponse
+                {
+                    TotalCount = totalCount,
+                    Page = request.Page,
+                    PageSize = request.PageSize,
+                    Data = data
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

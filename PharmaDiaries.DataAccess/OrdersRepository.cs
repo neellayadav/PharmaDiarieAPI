@@ -43,6 +43,7 @@ namespace PharmaDiaries.DataAccess
                         cmd.Parameters.AddWithValue("@Quantity", order.Quantity);
                         cmd.Parameters.AddWithValue("@UnitPrice", order.UnitPrice);
                         cmd.Parameters.AddWithValue("@TotalAmount", order.TotalAmount);
+                        cmd.Parameters.AddWithValue("@orderType", order.orderType ?? "POB");
                         cmd.Parameters.AddWithValue("@CreatedBy", order.CreatedBy);
 
                         con.Open();
@@ -73,6 +74,7 @@ namespace PharmaDiaries.DataAccess
                         cmd.Parameters.AddWithValue("@Quantity", order.Quantity);
                         cmd.Parameters.AddWithValue("@UnitPrice", order.UnitPrice);
                         cmd.Parameters.AddWithValue("@TotalAmount", order.TotalAmount);
+                        cmd.Parameters.AddWithValue("@orderType", order.orderType ?? "POB");
                         cmd.Parameters.AddWithValue("@ModifiedBy", order.ModifiedBy);
 
                         con.Open();

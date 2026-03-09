@@ -20,7 +20,7 @@ namespace PharmaDiaries.DataAccess
         private IConfiguration configuration;
         FWEmpDTRepository fwEmpDt;
         FWProdDTRepository fwProdDt;
-        OrderRepository orderRepo;
+        OrdersRepository orderRepo;
         private string PharmaDiaries_ConnectionString;
 
         public FWHdRepository(IConfiguration configuration)
@@ -31,7 +31,7 @@ namespace PharmaDiaries.DataAccess
 
             this.fwEmpDt = new FWEmpDTRepository(this.configuration);
             this.fwProdDt = new FWProdDTRepository(this.configuration);
-            this.orderRepo = new OrderRepository(this.configuration);
+            this.orderRepo = new OrdersRepository(this.configuration);
         }
 
         public List<FieldWorkHeader> FWHeaderList()

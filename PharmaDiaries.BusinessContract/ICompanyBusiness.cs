@@ -33,6 +33,8 @@ namespace PharmaDiaries.BusinessContract
         public Task<GeoFenceSettingsResponse?> GetGeoFenceSettingsAsync(int compId);
 
         public Task<bool> UpdateGeoFenceSettingsAsync(GeoFenceSettingsRequest request);
+
+        public Task<bool> UpdateCompanySettingsAsync(CompanySettingsUpdateRequest request);
 	}
 }
 

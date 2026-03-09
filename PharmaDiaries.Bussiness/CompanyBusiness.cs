@@ -84,5 +84,10 @@ namespace PharmaDiaries.Bussiness
         {
             return _irepository.UpdateGeoFenceSettingsAsync(request);
         }
+
+        public Task<bool> UpdateCompanySettingsAsync(CompanySettingsUpdateRequest request)
+        {
+            return _irepository.UpdateCompanySettingsAsync(request);
+        }
     }
 }

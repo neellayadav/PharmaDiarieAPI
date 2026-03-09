@@ -47,6 +47,8 @@ namespace PharmaDiaries.Models
 
         public string? ReportingManagerName { get; set; }
 
+        public string emailid { get; set; } = string.Empty;
+
         public int? CreatedBy { get; set; }
 
         public DateTime? CreatedOn { get; set; }
